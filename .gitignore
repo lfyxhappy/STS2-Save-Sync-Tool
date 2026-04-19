@@ -1,32 +1,19 @@
-# Prerequisites
-*.d
+# Build outputs
+bin/
+obj/
+publish*/
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Visual Studio / Rider
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
 
-# Precompiled Headers
-*.gch
-*.pch
+# OS files
+Thumbs.db
+Desktop.ini
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+# Local tool data
+*.log
