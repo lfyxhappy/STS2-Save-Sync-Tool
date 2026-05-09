@@ -1,4 +1,5 @@
-# STS2 Save Sync Tool
+#杀戮尖塔2存档同步工具
+#杀戮尖塔2#mod
 
 `STS2 官方档 / Modded 档进度同步 made by 良风`
 
