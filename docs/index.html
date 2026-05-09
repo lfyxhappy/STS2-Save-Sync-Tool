@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Slay the Spire 2 官方档 / Modded 档 progress.save 同步工具，支持手动同步、自动备份和 Steam 本地缓存元数据更新。">
+  <meta name="keywords" content="Slay the Spire 2, STS2, save sync, progress.save, modded save, Steam Cloud, WPF, .NET">
+  <meta property="og:title" content="杀戮尖塔2存档同步工具 / STS2 Save Sync Tool">
+  <meta property="og:description" content="手动同步 Slay the Spire 2 官方档与 Modded 档的 progress.save。">
+  <meta property="og:type" content="website">
+  <title>杀戮尖塔2存档同步工具 / STS2 Save Sync Tool</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --text: #17202f;
+      --muted: #5d6b82;
+      --line: #dce3ef;
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+      --green: #0f766e;
+      --shadow: 0 18px 50px rgba(31, 42, 68, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+    }
+
+    .hero {
+      background: #132033;
+      color: #f8fbff;
+    }
+
+    .hero-inner,
+    .section {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 420px;
+      gap: 48px;
+      align-items: center;
+      min-height: 580px;
+      padding: 56px 0 72px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 22px 0;
+      color: #dbe8ff;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      color: #c8d7ef;
+      text-decoration: none;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(40px, 7vw, 76px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 24px 0 0;
+      max-width: 680px;
+      font-size: 19px;
+      color: #cbd8ea;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .button.primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .button.primary:hover {
+      background: var(--accent-dark);
+    }
+
+    .button.secondary {
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: #f8fbff;
+    }
+
+    .mockup {
+      background: #f7fbff;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      color: var(--text);
+    }
+
+    .mockup-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      background: #e9eef7;
+      border-bottom: 1px solid #d4ddec;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 16px 0 #f59e0b, 32px 0 #22c55e;
+      margin-right: 34px;
+    }
+
+    .mockup-body {
+      padding: 18px;
+    }
+
+    .profile-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .save-card {
+      border: 1px solid #dbe3ef;
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .save-card h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+    }
+
+    .save-card p {
+      margin: 6px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .sync-bar {
+      margin-top: 16px;
+      padding: 14px;
+      background: #eef5ff;
+      border: 1px solid #d5e6ff;
+      border-radius: 8px;
+      color: #1d4ed8;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section h2 {
+      margin: 0 0 18px;
+      font-size: 34px;
+      line-height: 1.2;
+    }
+
+    .section-intro {
+      max-width: 760px;
+      margin: 0 0 32px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      box-shadow: 0 10px 28px rgba(31, 42, 68, 0.06);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .safety {
+      background: #edf7f5;
+      border-top: 1px solid #d7ebe7;
+      border-bottom: 1px solid #d7ebe7;
+    }
+
+    .faq {
+      display: grid;
+      gap: 14px;
+    }
+
+    details {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    details p {
+      margin: 12px 0 0;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 32px 20px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      background: #fff;
+    }
+
+    @media (max-width: 880px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .grid,
+      .profile-row {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        align-items: flex-start;
+        gap: 12px;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <nav class="nav" aria-label="Primary">
+        <div class="brand">STS2 Save Sync Tool</div>
+        <div class="nav-links">
+          <a href="#features">功能</a>
+          <a href="#safety">安全</a>
+          <a href="#faq">FAQ</a>
+          <a href="https://github.com/lfyxhappy/STS2-Save-Sync-Tool">GitHub</a>
+        </div>
+      </nav>
+      <div class="hero-inner">
+        <div>
+          <h1>杀戮尖塔2存档同步工具</h1>
+          <p class="lead">手动同步 Slay the Spire 2 官方档与 Modded 档的 progress.save，适合普通档和 Modded 档进度不一致时使用。</p>
+          <div class="actions">
+            <a class="button primary" href="https://github.com/lfyxhappy/STS2-Save-Sync-Tool/releases/latest">下载 Windows 版</a>
+            <a class="button secondary" href="https://github.com/lfyxhappy/STS2-Save-Sync-Tool">查看源码</a>
+          </div>
+        </div>
+        <div class="mockup" aria-label="Tool interface preview">
+          <div class="mockup-title"><span class="dot"></span>STS2 官方档 / Modded 档进度同步</div>
+          <div class="mockup-body">
+            <strong>Profile 1</strong>
+            <div class="profile-row">
+              <div class="save-card">
+                <h3>普通档</h3>
+                <p>progress.save 存在</p>
+                <p>Steam 缓存正常</p>
+                <p>角色难度：A12</p>
+              </div>
+              <div class="save-card">
+                <h3>Modded 档</h3>
+                <p>progress.save 存在</p>
+                <p>缓存可修复</p>
+                <p>角色难度：A7</p>
+              </div>
+            </div>
+            <div class="sync-bar">手动选择方向，同步前自动备份目标侧旧文件</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" id="features">
+      <h2>为 STS2 Mod 玩家准备的小工具</h2>
+      <p class="section-intro">工具只处理进度存档，不修改游戏本体、mod、联机协议或官方存档结构。</p>
+      <div class="grid">
+        <article class="card">
+          <h3>普通档与 Modded 档对比</h3>
+          <p>扫描 `%AppData%\SlayTheSpire2\steam\&lt;steamId&gt;` 下的 profile1-3，并展示两侧进度摘要。</p>
+        </article>
+        <article class="card">
+          <h3>手动同步方向</h3>
+          <p>工具不会自动判断哪边更新，也不会自动覆盖。你明确点击“同步到 Modded”或“同步到普通档”。</p>
+        </article>
+        <article class="card">
+          <h3>Steam 缓存同步</h3>
+          <p>同步 progress.save 的同时更新 Steam 本地缓存镜像和 remotecache.vdf 元数据。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section safety" id="safety">
+      <h2>安全说明</h2>
+      <p class="section-intro">建议关闭游戏后再同步，避免游戏运行中写回旧存档。同步前会自动备份目标侧旧文件。</p>
+      <div class="grid">
+        <article class="card">
+          <h3>备份位置</h3>
+          <p>`%AppData%\SlayTheSpire2\save_sync_tool\backups`</p>
+        </article>
+        <article class="card">
+          <h3>支持文件</h3>
+          <p>当前版本只处理 `progress.save`，并同步对应 backup、Steam cache 和 remotecache 元数据。</p>
+        </article>
+        <article class="card">
+          <h3>运行环境</h3>
+          <p>Windows 桌面程序，当前发布包依赖 .NET 8 Desktop Runtime。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <h2>FAQ</h2>
+      <div class="faq">
+        <details open>
+          <summary>Will it overwrite my save automatically?</summary>
+          <p>No. You choose the sync direction manually, and the target side is backed up before writing.</p>
+        </details>
+        <details>
+          <summary>Does it support multiple profiles?</summary>
+          <p>Yes. It scans profile1, profile2, and profile3 for the selected Steam account.</p>
+        </details>
+        <details>
+          <summary>Does it change game files or mods?</summary>
+          <p>No. It only works with progress.save and related local cache metadata.</p>
+        </details>
+        <details>
+          <summary>Why update Steam local cache?</summary>
+          <p>Because Steam Cloud may use local cache metadata. Updating the cache mirror and remotecache.vdf helps reduce stale cache write-back issues.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+  <footer>
+    Made by 良风 · <a href="https://github.com/lfyxhappy/STS2-Save-Sync-Tool">GitHub Repository</a>
+  </footer>
+</body>
+</html>
