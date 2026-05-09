@@ -4,6 +4,8 @@
 
 一个基于 `WPF + .NET 8` 的 Windows 小工具，用来手动同步 Slay the Spire 2 官方档和 Modded 档的 `progress.save`。适合遇到“不开 Mod 有进度，开 Mod 后进度不一致”或“想把 Modded 档进度带回普通档”的玩家。
 
+![STS2 Save Sync Tool screenshot](docs/assets/sts2-save-sync-tool-main.png)
+
 ## 下载
 
 - Windows 版下载：<https://github.com/lfyxhappy/STS2-Save-Sync-Tool/releases/latest>
