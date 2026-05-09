@@ -9,6 +9,24 @@
 - Windows 版下载：<https://github.com/lfyxhappy/STS2-Save-Sync-Tool/releases/latest>
 - 当前工具只处理 `progress.save`，不会修改游戏本体、mod、联机协议或官方存档结构。
 
+## English
+
+### What is this?
+
+STS2 Save Sync Tool is a small Windows utility for Slay the Spire 2 players who want to manually sync `progress.save` between the normal save profile and the Modded save profile.
+
+### Download
+
+Download the latest Windows build from the [GitHub Releases page](https://github.com/lfyxhappy/STS2-Save-Sync-Tool/releases/latest). The current release requires the .NET 8 Desktop Runtime.
+
+### Safety
+
+The tool does not auto-sync or guess which side is newer. You choose the direction manually, and the target-side files are backed up before sync.
+
+### Supported files
+
+The current version only handles `progress.save`. It also updates the matching `progress.save.backup`, Steam local cache mirror, and `remotecache.vdf` metadata when syncing.
+
 ## 功能
 
 - 自动扫描 `%AppData%\SlayTheSpire2\steam\<steamId>` 下的 `profile1-3`
