@@ -308,6 +308,57 @@
       background: #fff;
     }
 
+    .related-pages {
+      background: #fff;
+      border-top: 1px solid var(--line);
+      padding: 34px 20px;
+    }
+
+    .related-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(280px, 0.6fr);
+      gap: 24px;
+      align-items: center;
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+
+    .related-inner h2 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    .related-inner p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .related-links {
+      display: grid;
+      gap: 12px;
+    }
+
+    .related-links a {
+      display: grid;
+      gap: 4px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fbff;
+      padding: 18px;
+      text-decoration: none;
+    }
+
+    .related-links span {
+      color: var(--accent-dark);
+      font-weight: 800;
+    }
+
+    .related-links small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
     @media (max-width: 880px) {
       .hero-inner {
         grid-template-columns: 1fr;
@@ -315,7 +366,8 @@
       }
 
       .grid,
-      .profile-row {
+      .profile-row,
+      .related-inner {
         grid-template-columns: 1fr;
       }
 
@@ -428,6 +480,20 @@
       </div>
     </section>
   </main>
+  <section class="related-pages" aria-labelledby="related-title">
+    <div class="related-inner">
+      <div>
+        <h2 id="related-title" data-i18n="relatedTitle">其他 GitHub Pages</h2>
+        <p data-i18n="relatedIntro">继续查看我做的其他《杀戮尖塔 2》相关工具页面。</p>
+      </div>
+      <div class="related-links">
+        <a href="https://lfyxhappy.github.io/STS2mods/">
+          <span data-i18n="relatedModsTitle">杀戮尖塔2 Mod 合集</span>
+          <small data-i18n="relatedModsText">多人伤害统计、速度调节、重打、中文调试控制台和观者角色</small>
+        </a>
+      </div>
+    </div>
+  </section>
   <footer>
     <span data-i18n="footerText">Made by 良风</span> · <a href="https://github.com/lfyxhappy/STS2-Save-Sync-Tool">GitHub Repository</a>
   </footer>
@@ -476,6 +542,10 @@
         faqGameFilesA: "不会。它只处理 progress.save 和相关本地缓存元数据。",
         faqCacheQ: "为什么要更新 Steam 本地缓存？",
         faqCacheA: "Steam 云可能会参考本地缓存元数据。同步缓存镜像和 remotecache.vdf 可以降低旧缓存回写导致的冲突。",
+        relatedTitle: "其他 GitHub Pages",
+        relatedIntro: "继续查看我做的其他《杀戮尖塔 2》相关工具页面。",
+        relatedModsTitle: "杀戮尖塔2 Mod 合集",
+        relatedModsText: "多人伤害统计、速度调节、重打、中文调试控制台和观者角色",
         footerText: "Made by 良风"
       },
       en: {
@@ -520,6 +590,10 @@
         faqGameFilesA: "No. It only works with progress.save and related local cache metadata.",
         faqCacheQ: "Why update Steam local cache?",
         faqCacheA: "Steam Cloud may use local cache metadata. Updating the cache mirror and remotecache.vdf helps reduce stale cache write-back issues.",
+        relatedTitle: "Other GitHub Pages",
+        relatedIntro: "Explore my other Slay the Spire 2 utility pages.",
+        relatedModsTitle: "Slay the Spire 2 Mod Collection",
+        relatedModsText: "Damage meter, speed control, rerun button, Chinese debug console, and Watcher character",
         footerText: "Made by Liangfeng"
       }
     };
